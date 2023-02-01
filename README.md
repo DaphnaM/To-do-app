@@ -20,6 +20,14 @@ A simple task management app built with React, Redux, and Express.js.
 - [Redux](https://redux.js.org/)
 - [Express.js](https://expressjs.com/)
 
-npm install react-dropdown --save
+## npm
 
+```
+npm install react-dropdown --save
 npm i redux-devtools-extension
+npm run start 
+npm install express
+npm install axios
+```
+
+

@@ -7,6 +7,7 @@ import "../App.css";
 import { useDispatch } from "react-redux";
 import TaskForm from "./TaskForm";
 
+//Task component maps task information
 const Task = ({ task, updateTask }) => {
   //const dispatch = useDispatch();
   const [editing, setEditing] = useState(false);

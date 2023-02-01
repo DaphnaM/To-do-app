@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addNewTask, updateTask } from "../actions";
 import "../App.css";
 
+//Task from component, recieves current task and conditionally renders the data if currentTask exists
 const TaskForm = ({ currentTask }) => {
   const dispatch = useDispatch();
   let tasks = useSelector((state) => state.tasksReducer.tasks);
   console.log(tasks);
+
   const [subTasksToUpdate, setSubTasksToUpdate] = useState([]);
   const [task, setTask] = useState({
     image: currentTask?.image ? currentTask?.image : "",
@@ -19,6 +21,8 @@ const TaskForm = ({ currentTask }) => {
     parentTask: currentTask?.parentTask ? currentTask?.parentTask : null,
     subTasks: currentTask?.subTasks ? currentTask?.subTasks : [],
   });
+
+  const options = ["Done", "In Progress", "New"];
 
   const handleChange = (event) => {
     setTask({
@@ -38,8 +42,6 @@ const TaskForm = ({ currentTask }) => {
       dispatch(addNewTask(task));
     }
   };
-  const options = ["Done", "In Progress", "New"];
-
   const pickSubTask = (clickedTask) => {
     setTask({ ...task, subTasks: task.subTasks.concat(clickedTask.id) });
     setSubTasksToUpdate([subTasksToUpdate, clickedTask.id]);
@@ -47,6 +49,7 @@ const TaskForm = ({ currentTask }) => {
   const testing = () => {
     console.log(currentTask);
   };
+
   return (
     <form className="form_wrapper" onClick={testing}>
       <div className="form-row">

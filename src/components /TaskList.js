@@ -4,6 +4,7 @@ import { fetchTasksSuccess, fetchTasksError } from "../actions";
 import Task from "./TaskItem";
 import "../App.css";
 
+//Task list component. Fetches tasks from server 
 const TaskList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasksReducer.tasks);
@@ -29,11 +30,6 @@ const TaskList = () => {
         <Task
           className="task"
           key={task.id}
-          // imageSrc={task.imageSrc}
-          // title={task.title}
-          // assignee={task.assignee}
-          // creationDate={task.creationDate}
-          // status={task.status}
           task={task}
         />
       ))}

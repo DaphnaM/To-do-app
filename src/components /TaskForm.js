@@ -5,11 +5,12 @@ import { addNewTask, updateTask } from "../actions";
 import "../App.css";
 
 //Task from component, recieves current task and conditionally renders the data if currentTask exists
-const TaskForm = ({ currentTask }) => {
+const TaskForm = ({ currentTask, editTask }) => {
   const dispatch = useDispatch();
   let tasks = useSelector((state) => state.tasksReducer.tasks);
   console.log(tasks);
 
+  const [editing, setEditing] = useState(false);
   const [subTasksToUpdate, setSubTasksToUpdate] = useState([]);
   const [task, setTask] = useState({
     image: currentTask?.image ? currentTask?.image : "",
@@ -31,6 +32,7 @@ const TaskForm = ({ currentTask }) => {
     });
     console.log("changing ", event.target.name, " to : ", event.target.value);
     let updatedTask = task;
+    setEditing(true);
   };
 
   const handleSubmitForm = (e) => {
@@ -41,7 +43,10 @@ const TaskForm = ({ currentTask }) => {
     } else {
       dispatch(addNewTask(task));
     }
+    editTask();
   };
+
+  //function to create sub task, not completed
   const pickSubTask = (clickedTask) => {
     setTask({ ...task, subTasks: task.subTasks.concat(clickedTask.id) });
     setSubTasksToUpdate([subTasksToUpdate, clickedTask.id]);
@@ -52,6 +57,7 @@ const TaskForm = ({ currentTask }) => {
 
   return (
     <form className="form_wrapper" onClick={testing}>
+      <span onClick={editTask}> ✖️ </span>
       <div className="form-row">
         <img src="https://icons-for-free.com/iconfiles/png/512/avatar+circle+male+profile+user+icon-1320196710301016992.png" />
         <div className="input_wrapper">

@@ -16,9 +16,12 @@ const Task = ({ task, updateTask }) => {
   };
 
   return (
-    <div className="task" onClick={editTask}>
+    <div
+      className="task"
+      onClick={() => (editing ? editTask : setEditing(true))}
+    >
       {editing ? (
-        <TaskForm currentTask={task} />
+        <TaskForm currentTask={task} editTask={editTask} />
       ) : (
         <>
           <img className="task__image" src={task.imageSrc} />

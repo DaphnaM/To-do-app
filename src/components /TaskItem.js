@@ -1,27 +1,30 @@
 import React, { useState } from "react";
-
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import { updateTask, add } from "../actions";
-import StatusDropdown from "./StatusDropdown";
-import "../App.css";
 import { useDispatch } from "react-redux";
+import StatusDropdown from "./Dropdown";
+import "../App.css";
 import TaskForm from "./TaskForm";
+import { toggleTaskEditing } from "../actions";
 
 //Task component maps task information
-const Task = ({ task, updateTask }) => {
-  //const dispatch = useDispatch();
-  const [editing, setEditing] = useState(false);
-  const editTask = () => {
-    setEditing(!editing);
+const Task = ({ task }) => {
+  const dispatch = useDispatch();
+
+  const { editing } = task;
+
+  const openEditMode = () => {
+    console.log("toggle task editing", task);
+    dispatch(toggleTaskEditing(task));
+  };
+  const handleClick = (event) => {
+    console.log(event.target.name);
+    if (!editing) openEditMode();
   };
 
+  //Passing down currentTask to know if were editing a task or if we're creating a new task
   return (
-    <div
-      className="task"
-      onClick={() => (editing ? editTask : setEditing(true))}
-    >
+    <div className="task form_wrapper" onClick={handleClick}>
       {editing ? (
-        <TaskForm currentTask={task} editTask={editTask} />
+        <TaskForm currentTask={task} />
       ) : (
         <>
           <img className="task__image" src={task.imageSrc} />
@@ -34,7 +37,7 @@ const Task = ({ task, updateTask }) => {
               Created at: {task.creationDate}
             </div>
           </div>
-          <div>
+          <div className="task-status-dropdown">
             <StatusDropdown task={task} />
           </div>
         </>

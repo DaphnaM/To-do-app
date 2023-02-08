@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap');
 .body{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
+  padding: 10px;
+  font-style: normal;
+  background-color: #F7F9FC;
+  max-width: 1000px;
 }
 form {
   overflow: hidden;
@@ -14,15 +19,10 @@ img {
   background: url(http://goo.gl/vyAs27) no-repeat scroll 0 0;
 }
 
-
-
-label{
-  margin-bottom: 5px;
-}
-
 .input_wrapper{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 
@@ -41,17 +41,11 @@ label{
 .form_wrapper{
       display: flex;
     flex-direction: column;
-    width: 100%;
+    
+    background-color: #F7F9FC;
+    margin-top: 10px;
 }
 
-.new_task_button{
-  background-color: transparent;
-  border: solid 1px #cecece;
-  padding: 5px 10px;
-  border-radius: 6px;
-  margin-left: 20px;
-  font-family: 'Montserrat';
-}
 
 .task {
   display: flex;
@@ -62,6 +56,8 @@ label{
   justify-content: space-around;
   border-radius: 6px;
   margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #F7F9FC;
 }
 
 .task__image {
@@ -125,24 +121,30 @@ i.fa-angle-right {
 /*FORM CSS*/
 .form-container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  padding: 20px;
+  /* bellow was added */
+  margin-bottom: 1rem; 
+
+  /* padding: 20px; */
 }
 
 .form-row {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    
     width: 100%;
     margin-bottom: 20px;
 }
-
+.form-row-1{
+  display: flex;
+  flex-direction: column;
+}
 .form-image {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  
 }
 
 .form-text {
@@ -162,25 +164,257 @@ select {
   flex-direction: column;
 }
 
-.submit_button{
-    font-family: 'Montserrat';
-    padding: 5px;
-    margin-top: 15px;
+.submit_button {
+  font-family: 'Inter', sans-serif;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border-radius: 40px;
+  background-color: #0F52BA;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submit_button:hover {
+  background-color: rgb(106, 136, 181)
 }
 
 .status_dropdown{
     background-color: transparent;
-    padding: 5px 10px;
-    border-radius: 50px;
-    font-family: 'Montserrat';
+    
+     
+    
+    font-family: 'Inter', sans-serif;
     text-align: center;
+    border-radius:6px ;
+    border: 0px solid #DFE3EB;
+    padding-right: 10px;
+    
+
 }
+.task-status-dropdown{
+  padding: 10px 10px;
+
+}
+.lable-row-2{
+  padding: 5px 10px;
+}
+
 
 input,textarea {
   border-radius: 5px;
   border: solid #cecece 1px;
   padding: 5px;
-  font-family: 'Montserrat';
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 0.5rem;
+}
+textarea{
+  margin-top: 10px;
+background-color: #EEF2F8;
+border-radius: 10px;
+border: 0px
+
+
 }
 
+.sub-tasks-lable-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  color: #475467;
+  
+}
 
+.sub-tasks-lable-container div {
+  background-color:#EEF2F8;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  padding: 30px
+  }
+  
+  form {
+  overflow: hidden;
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px #10182814, 0 12px 16px #10182814;
+  }
+  
+  img {
+  width: 100px;
+  height: 100px;
+  margin-right: 1rem;
+  background: url(http://goo.gl/vyAs27) no-repeat scroll 0 0;
+  
+  }
+  
+  label {
+  font-size: 16px;
+  }
+  
+  .input_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  }
+  
+  .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  }
+  
+  
+  .new_task_button {
+  
+  border: solid 1px #DFE3EB;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  }
+
+  .new_task_button:hover {
+  background-color: #333;
+  color: #fff;
+  }
+  
+  .task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  justify-content: space-between;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px #10182814, 0 12px 16px #10182814;
+  }
+  
+  .task__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 20px;
+  background-color: #333;
+  }
+  
+  .task__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+  color: #98A2B3;
+  }
+  
+  .task__title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  }
+  
+  .task__assignee {
+  font-size: 14px;
+  }
+  
+  .task__date {
+  font-size: 14px;
+  margin-top: 5px;
+  }
+  
+  .task__status {
+  width: 100px
+  }
+  .task-title {
+    width: 576px;
+    height: 18px;
+    color: #101828;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 10px;
+  }
+  .creationDate{
+    font-size: 12px;
+    font-style: normal;
+    color: #667085
+  }
+  .input-description{
+    color: #667085
+  }
+  .form-row-2{
+    justify-content: space-around;
+  }
+  .select-hover{
+    cursor: pointer;
+
+  }
+  .sub-tasks-lable{
+    color: #667085;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+  }
+  hr {
+    width: 90%;
+    border: 1px solid #98A2B3;
+    opacity: 0.4;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  }
+  .arrow {
+    border: solid #475467;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    
+  }
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+  .dropdown_task{
+    padding: 5px 10px;
+  }
+  
+  .icon{
+    /* Icon */
+
+position: absolute;
+left: 8.33%;
+right: 8.33%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Liminal/Gray/900 */
+border: 2px solid #1D2939;
+
+  }
+  .form-task-title{
+    cursor: pointer;
+  }
+  .form-image{
+    height: 40px;
+    width: 40px;
+    background-color: #0F52BA;
+    border-radius: 50%;
+    border-radius: 6px;
+    padding: 8px;
+    
+  }

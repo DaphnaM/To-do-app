@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleEditing } from "../actions";
 import "../App.css";
 import TaskForm from "./TaskForm.js";
 
 //
-const TitleAndButton = ({ onClick }) => {
+const TitleAndButton = ({ onClick, showForm }) => {
   const dispatch = useDispatch();
-  const [showForm, setShowForm] = useState(false);
+  const editing = useSelector((state) => state.tasksReducer.editing);
+  const handleClick = () => {
+    dispatch(toggleEditing());
+  };
 
-  return showForm ? (
+  return editing ? (
     <>
       <div style={{ display: "flex", alignItems: "center" }}>
         <h3>Tasks</h3>
-        <button
-          className="new_task_button"
-          onClick={() => setShowForm(!showForm)}
-        >
+        <button className="new_task_button" onClick={handleClick}>
           Cancel
         </button>
       </div>
@@ -24,10 +25,7 @@ const TitleAndButton = ({ onClick }) => {
   ) : (
     <div style={{ display: "flex", alignItems: "center" }}>
       <h3>Tasks</h3>
-      <button
-        className="new_task_button"
-        onClick={() => setShowForm(!showForm)}
-      >
+      <button className="new_task_button" onClick={handleClick}>
         New Task
       </button>
     </div>

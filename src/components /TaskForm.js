@@ -1,87 +1,155 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import SubTasks from "./SubTasks";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewTask, updateTask } from "../actions";
+import {
+  addNewTask,
+  toggleEditing,
+  toggleTaskEditing,
+  updateTask,
+} from "../actions";
 import "../App.css";
+import { TaskList } from "./TaskList";
 
 //Task from component, recieves current task and conditionally renders the data if currentTask exists
+
 const TaskForm = ({ currentTask, editTask }) => {
   const dispatch = useDispatch();
   let tasks = useSelector((state) => state.tasksReducer.tasks);
-  console.log(tasks);
+  let team = useSelector((state) => state.tasksReducer.team);
+  // let taskId = useSelector((state) => {
+  //   const lastTaskIndex = state.taskReducer.tasks?.length - 1;
+  //   const lastTask = state.taskReducer.tasks[lastTaskIndex];
+  //   return console.log(lastTask);
+  // });
+  const createDate = () => {
+    const now = new Date();
+    return now.toDateString();
+  };
+  const newTask = {
+    id: Math.random() * 1000,
+    imageSrc:
+      "https://icons-for-free.com/iconfiles/png/512/avatar+circle+male+profile+user+icon-1320196710301016992.png",
+    title: "",
+    creationDate: createDate(),
+    status: "New",
+    assignee: "Pick assignee",
 
-  const [editing, setEditing] = useState(false);
-  const [subTasksToUpdate, setSubTasksToUpdate] = useState([]);
-  const [task, setTask] = useState({
-    image: currentTask?.image ? currentTask?.image : "",
-    title: currentTask?.title ? currentTask?.title : "",
-    creationDate: currentTask?.creationDate ? currentTask?.creationDate : "",
-    status: currentTask?.status ? currentTask?.status : "New",
-    assignee: currentTask?.assignee ? currentTask?.assignee : "",
-    description: currentTask?.description ? currentTask?.description : "",
-    parentTask: currentTask?.parentTask ? currentTask?.parentTask : null,
-    subTasks: currentTask?.subTasks ? currentTask?.subTasks : [],
-  });
+    description: "",
+    //parentTask: currentTask.parentTask || null,
+    subTasks: [],
+  };
+  const currentTaskState = currentTask ? currentTask : newTask;
+  const [subTasks, setSubTasks] = useState([]);
+  const [editTitle, setEditTitle] = useState(false);
 
+  const [task, setTask] = useState(currentTaskState);
+  console.log(task);
   const options = ["Done", "In Progress", "New"];
 
   const handleChange = (event) => {
-    setTask({
-      ...task,
-      [event.target.name]: event.target.value,
-    });
-    console.log("changing ", event.target.name, " to : ", event.target.value);
-    let updatedTask = task;
-    setEditing(true);
+    if (event.target.name === "subTasks") {
+      setSubTasks(event.target.value);
+      console.log(subTasks);
+
+      setTask({ ...task, subTasks: subTasks });
+    } else {
+      console.log(task);
+      setTask({
+        ...task,
+        [event.target.name]: event.target.value,
+      });
+      console.log("event", event);
+      console.log("changing ", event.target.name, " to : ", event.target.value);
+      let updatedTask = task;
+    }
+  };
+  const handleSubTaskClick = (event) => {
+    console.log(event);
+    setSubTasks(event.target.value);
+    console.log(subTasks);
+    setTask({ ...task, subTasks: subTasks });
   };
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log("creating task ", task);
     if (currentTask) {
-      dispatch(updateTask(task));
+      console.log("updating task ", task);
+      dispatch(updateTask({ ...task }));
+      setTask(task);
+
+      //currentTask = [];
     } else {
-      dispatch(addNewTask(task));
+      console.log("creating task ", task);
+      dispatch(addNewTask({ ...task, subTasks: subTasks }));
+      //currentTask = [];
     }
-    editTask();
+    closeForm();
   };
 
   //function to create sub task, not completed
   const pickSubTask = (clickedTask) => {
-    setTask({ ...task, subTasks: task.subTasks.concat(clickedTask.id) });
-    setSubTasksToUpdate([subTasksToUpdate, clickedTask.id]);
+    console.log("picking sub task", clickedTask);
+    setTask({ ...task, subTasks: "sub task" });
+    // setSubTasksToUpdate([...subTasksToUpdate, clickedTask.id]);
+    console.log(task.subTak);
+    //console.log(subTasksToUpdate);
   };
-  const testing = () => {
-    console.log(currentTask);
+
+  const closeForm = () => {
+    console.log("closing form");
+    const dispatchEvent = currentTask
+      ? toggleTaskEditing(currentTask)
+      : toggleEditing();
+    console.log(dispatchEvent);
+    dispatch(dispatchEvent);
+  };
+  const handleEditTitle = () => {
+    setEditTitle(!editTitle);
   };
 
   return (
-    <form className="form_wrapper" onClick={testing}>
-      <span onClick={editTask}> ✖️ </span>
+    <form className="form_wrapper">
+      <span onClick={closeForm}> ✖️ </span>
       <div className="form-row">
-        <img src="https://icons-for-free.com/iconfiles/png/512/avatar+circle+male+profile+user+icon-1320196710301016992.png" />
-        <div className="input_wrapper">
-          <label htmlFor="inputTitle">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputTitle"
-            name="title"
-            value={task.title}
-            onChange={handleChange}
-          />
-        </div>
+        <img className="form-image" src="/icon.svg" />
+        <div className="form-row-1">
+          {editTitle ? (
+            <div className="input_wrapper">
+              <input
+                type="text"
+                className="form-control"
+                id="inputTitle"
+                name="title"
+                value={task.title}
+                onChange={handleChange}
+              />
+            </div>
+          ) : (
+            <label
+              className="task-title form-task-title"
+              onClick={handleEditTitle}
+            >
+              {task.title ? task.title : "New Task"}
+            </label>
+          )}
 
-        <label htmlFor="inputCreationDate">{task.creationDate}</label>
+          <label className="creationDate" htmlFor="inputCreationDate">
+            {task.creationDate}
+          </label>
+        </div>
       </div>
-      <div className="form-row">
+      <hr />
+      <div className="form-row-2 form-row">
         <div className="input_wrapper">
-          <label htmlFor="inputStatus">Status</label>
+          <label className="lable-row-2" htmlFor="inputStatus">
+            Status
+          </label>
 
           <select
-            className="status_dropdown"
+            className="status_dropdown select-hover"
             onChange={handleChange}
             value={task.status}
+            //onChange={()=>{console.log("")}} //got an error that
             name="status"
           >
             {options.map((option) =>
@@ -96,22 +164,36 @@ const TaskForm = ({ currentTask, editTask }) => {
               )
             )}
           </select>
+          <i className="arrow down"></i>
         </div>
 
         <div className="input_wrapper">
-          <label htmlFor="inputAssignee">Assignee</label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputAssignee"
-            name="assignee"
-            value={task.assignee}
-            onChange={handleChange}
-          />
+          <div className="input_wrapper">
+            <label className="lable-row-2" htmlFor="inputAssignee">
+              Assign to
+            </label>
+
+            <select
+              className="status_dropdown"
+              onChange={handleChange}
+              value={task.assignee ? task.assignee : null}
+              name="assignee"
+            >
+              <option value="Pick assignee">Pick assignee</option>
+              {team.map((teamMember) => (
+                <option key={teamMember} value={teamMember}>
+                  {teamMember}
+                </option>
+              ))}
+            </select>
+            <i className="arrow down"></i>
+          </div>
         </div>
       </div>
       <div className="form-group">
-        <label htmlFor="inputDescription">Description</label>
+        <label className="input-description" htmlFor="inputDescription">
+          Description
+        </label>
         <textarea
           className="form-control"
           id="inputDescription"
@@ -121,19 +203,25 @@ const TaskForm = ({ currentTask, editTask }) => {
           onChange={handleChange}
         />
 
+        {/*
+        
         {task.parentTask ? (
           <></>
         ) : (
           <>
             {tasks.map((clickableTask) => {
-              <div onClick={() => pickSubTask(clickableTask)}>
-                {" "}
-                {clickableTask.title}
-              </div>;
+              <div onClick={handleChange}> {clickableTask.title}</div>;
             })}
           </>
         )}
 
+        */}
+        <div>
+          <lable>Related tasks</lable>
+          <TaskList />
+        </div>
+
+        <SubTasks currentId={task.id} />
         <button
           type="submit"
           onClick={handleSubmitForm}

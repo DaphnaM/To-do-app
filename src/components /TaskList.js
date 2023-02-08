@@ -4,11 +4,10 @@ import { fetchTasksSuccess, fetchTasksError } from "../actions";
 import Task from "./TaskItem";
 import "../App.css";
 
-//Task list component. Fetches tasks from server 
-const TaskList = () => {
+//Task list component. Fetches tasks from server
+const TaskListContainer = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasksReducer.tasks);
-
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -24,17 +23,17 @@ const TaskList = () => {
     fetchTasks();
   }, [dispatch]);
 
+  return <TaskList tasks={tasks} />;
+};
+
+export function TaskList({ tasks = [] }) {
   return (
     <div>
       {tasks.map((task) => (
-        <Task
-          className="task"
-          key={task.id}
-          task={task}
-        />
+        <Task className="task" key={task.id} task={task} />
       ))}
     </div>
   );
-};
+}
 
-export default TaskList;
+export default TaskListContainer;

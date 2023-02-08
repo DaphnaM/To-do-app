@@ -5,9 +5,8 @@ import { updateTask } from "../actions.js";
 import "../App.css";
 
 //Status dropdown component
-const StatusDropdown = ({ task }) => {
+const Dropdown = ({ task }) => {
   const dispatch = useDispatch();
-  console.log(task);
   const options = ["Done", "In Progress", "New"];
   const [newStatus, setNewStatus] = useState(task.status);
 
@@ -16,7 +15,7 @@ const StatusDropdown = ({ task }) => {
     let updatedTask = task;
     updatedTask.status = e.target.value;
     setNewStatus(e.target.value);
-    dispatch(updateTask(updatedTask));
+    dispatch(updateTask({ ...updatedTask }));
   };
   const colorSelector = () => {
     switch (newStatus) {
@@ -34,14 +33,17 @@ const StatusDropdown = ({ task }) => {
         break;
     }
   };
+  const handleSelectClick = (e) => {
+    e.stopPropagation();
+  };
 
-  //CHECKKK SELECT OR DEFAULT VALUE
   return (
     <select
-      className="status_dropdown"
+      className="status_dropdown dropdown_task"
       onChange={handleChange}
       value={newStatus}
       style={{ backgroundColor: colorSelector() }}
+      onClick={handleSelectClick}
     >
       {options.map((option) =>
         option === task.status ? (
@@ -58,7 +60,7 @@ const StatusDropdown = ({ task }) => {
   );
 };
 
-export default StatusDropdown;
+export default Dropdown;
 
 /*
 inside the first select tag

@@ -8,12 +8,10 @@ import TitleAndButton from "./components /TitleAndButton";
 import CreateTask from "./components /TaskForm";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
-const editTask = false;
+
 root.render(
   <Provider store={store}>
-    <div className="body">
-      <TitleAndButton />
-      <TaskList />
-    </div>
+    <TitleAndButton />
+    <TaskList />
   </Provider>
 );

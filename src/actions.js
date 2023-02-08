@@ -11,6 +11,7 @@ export const ADD_NEW_TASK_ERROR = "ADD_NEW_TASK_ERROR";
 export const ADD_NEW_TASK_SUCCESS = "ADD_NEW_TASK_SUCCESS";
 export const TOGGLE_EDITING = "TOGGLE_EDITING";
 export const TOGGLE_TASK_EDITING = "TOGGLE_TASK_EDITING";
+export const ADD_RELATED_TASKS = "ADD_RELATED_TASKS";
 
 export const fetchTasksSuccess = (tasks) => ({
   type: FETCH_TASKS_SUCCESS,
@@ -62,6 +63,10 @@ export const toggleTaskEditing = (task) => ({
 export const getTasksByIdSuccess = (task) => ({
   type: TOGGLE_TASK_EDITING,
   payload: task.id,
+});
+export const addRelatedTasks = (task1, task2) => ({
+  type: ADD_RELATED_TASKS,
+  payload: { task1, task2 },
 });
 
 export const updateTask = (task) => {

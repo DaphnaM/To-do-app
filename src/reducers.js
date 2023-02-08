@@ -7,6 +7,7 @@ import {
   ADD_NEW_TASK_SUCCESS,
   TOGGLE_EDITING,
   TOGGLE_TASK_EDITING,
+  ADD_RELATED_TASKS,
 } from "./actions";
 
 const initialState = {
@@ -80,6 +81,7 @@ export default function reducer(
         ...state,
         editing: !state.editing,
       };
+
     case TOGGLE_TASK_EDITING:
       return {
         ...state,
@@ -89,7 +91,20 @@ export default function reducer(
             : task
         ),
       };
-
+    case ADD_RELATED_TASKS:
+      const { task1, task2 } = action.payload;
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === task1) {
+            return { ...task, relatedTasks: [...task.relatedTasks, task2] };
+          }
+          if (task.id === task2) {
+            return { ...task, relatedTasks: [...task.relatedTasks, task1] };
+          }
+          return task;
+        }),
+      };
     default:
       return state;
   }

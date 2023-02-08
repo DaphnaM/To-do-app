@@ -20,6 +20,7 @@ const Task = ({ task, isSubTask = false }) => {
     if (!editing && !isSubTask) openEditMode();
   };
 
+  const closeForm = () => {};
   //Passing down currentTask to know if were editing a task or if we're creating a new task
   return (
     <div className="task form_wrapper" onClick={handleClick}>
@@ -32,8 +33,8 @@ const Task = ({ task, isSubTask = false }) => {
           <div>
             <div className="task__title">{task.title}</div>
             <div className="task__info">
-              Assigned to: {task.assignee}
-              <br />
+              <div className="assignee__title">{task.assignee}</div>
+              <span class="dot"></span>
               Created at: {task.creationDate}
             </div>
           </div>

@@ -99,13 +99,16 @@ const TaskForm = ({ currentTask, editTask }) => {
     setEditTitle(!editTitle);
   };
 
-  const relatedTaskIds = currentTask.relatedTasks || [];
+  const relatedTaskIds = currentTask?.relatedTasks || [];
 
   const relatedTasks = tasks.filter((task) => relatedTaskIds.includes(task.id));
 
   return (
     <form className="form_wrapper">
-      <span onClick={closeForm}> ✖️ </span>
+      <span className="x-icon" onClick={closeForm}>
+        {" "}
+        ✖️{" "}
+      </span>
       <div className="form-row">
         <img className="form-image" src="/icon.svg" />
         <div className="form-row-1">
@@ -212,12 +215,11 @@ const TaskForm = ({ currentTask, editTask }) => {
         )}
 
         */}
-        <div>
-          <lable>Related tasks</lable>
-          <TaskList tasks={relatedTasks} isSubTask={true} />
-        </div>
 
-        <SubTasks currentId={task.id} />
+        <lable className="related-tasks-title">Related tasks</lable>
+        <TaskList tasks={relatedTasks} isSubTask={true} />
+
+        <SubTasks currentId={task.id} subTasksIds={relatedTaskIds} />
         <button
           type="submit"
           onClick={handleSubmitForm}

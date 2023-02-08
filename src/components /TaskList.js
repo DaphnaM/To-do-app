@@ -26,11 +26,16 @@ const TaskListContainer = () => {
   return <TaskList tasks={tasks} />;
 };
 
-export function TaskList({ tasks = [] }) {
+export function TaskList({ tasks = [], isSubTask }) {
   return (
     <div>
       {tasks.map((task) => (
-        <Task className="task" key={task.id} task={task} />
+        <Task
+          className="task"
+          key={task.id}
+          task={task}
+          isSubTask={isSubTask}
+        />
       ))}
     </div>
   );

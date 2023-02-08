@@ -72,7 +72,6 @@ export const updateTask = (task) => {
         dispatch(editTaskSuccess(response.data));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(editTaskError(error));
       });
   };
@@ -86,7 +85,6 @@ export const addNewTask = (task) => {
         dispatch(addNewTaskSuccess(response.data));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(addNewTaskError(error));
       });
   };

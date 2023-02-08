@@ -6,7 +6,7 @@ import TaskForm from "./TaskForm";
 import { toggleTaskEditing } from "../actions";
 
 //Task component maps task information
-const Task = ({ task }) => {
+const Task = ({ task, isSubTask = false }) => {
   const dispatch = useDispatch();
 
   const { editing } = task;
@@ -17,7 +17,7 @@ const Task = ({ task }) => {
   };
   const handleClick = (event) => {
     console.log(event.target.name);
-    if (!editing) openEditMode();
+    if (!editing && !isSubTask) openEditMode();
   };
 
   //Passing down currentTask to know if were editing a task or if we're creating a new task

@@ -36,50 +36,44 @@ const TaskForm = ({ currentTask, editTask }) => {
 
     description: "",
     //parentTask: currentTask.parentTask || null,
-    subTasks: [],
+    relatedTasks: [],
   };
   const currentTaskState = currentTask ? currentTask : newTask;
   const [subTasks, setSubTasks] = useState([]);
   const [editTitle, setEditTitle] = useState(false);
 
   const [task, setTask] = useState(currentTaskState);
-  console.log(task);
+
   const options = ["Done", "In Progress", "New"];
 
   const handleChange = (event) => {
     if (event.target.name === "subTasks") {
       setSubTasks(event.target.value);
-      console.log(subTasks);
 
       setTask({ ...task, subTasks: subTasks });
     } else {
-      console.log(task);
       setTask({
         ...task,
         [event.target.name]: event.target.value,
       });
-      console.log("event", event);
-      console.log("changing ", event.target.name, " to : ", event.target.value);
+
       let updatedTask = task;
     }
   };
   const handleSubTaskClick = (event) => {
-    console.log(event);
     setSubTasks(event.target.value);
-    console.log(subTasks);
+
     setTask({ ...task, subTasks: subTasks });
   };
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
     if (currentTask) {
-      console.log("updating task ", task);
       dispatch(updateTask({ ...task }));
       setTask(task);
 
       //currentTask = [];
     } else {
-      console.log("creating task ", task);
       dispatch(addNewTask({ ...task, subTasks: subTasks }));
       //currentTask = [];
     }
@@ -88,24 +82,26 @@ const TaskForm = ({ currentTask, editTask }) => {
 
   //function to create sub task, not completed
   const pickSubTask = (clickedTask) => {
-    console.log("picking sub task", clickedTask);
     setTask({ ...task, subTasks: "sub task" });
     // setSubTasksToUpdate([...subTasksToUpdate, clickedTask.id]);
-    console.log(task.subTak);
+
     //console.log(subTasksToUpdate);
   };
 
   const closeForm = () => {
-    console.log("closing form");
     const dispatchEvent = currentTask
       ? toggleTaskEditing(currentTask)
       : toggleEditing();
-    console.log(dispatchEvent);
+
     dispatch(dispatchEvent);
   };
   const handleEditTitle = () => {
     setEditTitle(!editTitle);
   };
+
+  const relatedTaskIds = currentTask.relatedTasks || [];
+
+  const relatedTasks = tasks.filter((task) => relatedTaskIds.includes(task.id));
 
   return (
     <form className="form_wrapper">
@@ -218,7 +214,7 @@ const TaskForm = ({ currentTask, editTask }) => {
         */}
         <div>
           <lable>Related tasks</lable>
-          <TaskList />
+          <TaskList tasks={relatedTasks} isSubTask={true} />
         </div>
 
         <SubTasks currentId={task.id} />

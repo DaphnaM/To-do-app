@@ -11,7 +11,6 @@ const Dropdown = ({ task }) => {
   const [newStatus, setNewStatus] = useState(task.status);
 
   const handleChange = (e) => {
-    console.log(e);
     let updatedTask = task;
     updatedTask.status = e.target.value;
     setNewStatus(e.target.value);

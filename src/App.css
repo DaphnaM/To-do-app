@@ -418,3 +418,7 @@ border: 2px solid #1D2939;
     padding: 8px;
     
   }
+  .app-container{
+    max-width: 700px;
+    margin: 0 auto;
+  }

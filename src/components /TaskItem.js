@@ -19,11 +19,13 @@ const Task = ({ task, isSubTask = false }) => {
     if (!editing && !isSubTask) openEditMode();
   };
 
-  //Passing down currentTask to know if were editing a task or if we're creating a new task
+  //Passing down currentTask
   return (
-    <div className="task" onClick={handleClick}>
+    <div className={editing ? "task-form-open" : "task"} onClick={handleClick}>
       {editing && !isSubTask ? ( //making sure doesn't open form inside form
-        <TaskForm currentTask={task} />
+        <div className="task-form-container">
+          <TaskForm currentTask={task} />
+        </div>
       ) : (
         <>
           <div className="left-side-container">

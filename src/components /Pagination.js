@@ -14,14 +14,19 @@ export default function Pagination({
       {pages.map((page) => (
         <button
           key={page}
-          className={`pagination pagination__page-number ${
-            currentPage === page ? "active" : ""
-          }`}
+          className={`pagination  ${currentPage === page ? "active" : ""}`}
           onClick={() => onPageClick(page)}
         >
           {page}
         </button>
       ))}
+      <svg
+        width="8"
+        height="14"
+        viewBox="0 0 8 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      ></svg>
     </div>
   );
 }

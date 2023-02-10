@@ -56,7 +56,7 @@ img {
   display: grid;
   grid-template-columns: 80px 300px 200px;
   grid-template-rows: 100px;
-  justify-items: end;
+  justify-items: start;
   align-items: center;
   padding: 20px;
   border: 1px solid #ddd;
@@ -507,6 +507,11 @@ border: 0px
   .task-status-dropdown{
     padding: 0px;
 
+  }
+  .upper-right-cotainer{
+    justify-content: right;
+    padding-left: 0px;
+    
   }
 
 }

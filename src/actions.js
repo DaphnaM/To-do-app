@@ -76,6 +76,7 @@ export const deleteTaskSuccess = (taskId) => ({
   type: DELETE_TASK_SUCCESS,
   payload: taskId,
 });
+
 export const deleteTaskError = (error) => ({
   type: DELETE_TASK_ERROR,
   payload: error,
@@ -120,7 +121,7 @@ export const deleteTask = (taskId) => {
     axios
       .delete(`http://localhost:3001/task/${taskId}`)
       .then((response) => {
-        dispatch(deleteTaskSuccess(response.data));
+        dispatch(deleteTaskSuccess(taskId));
       })
       .catch((error) => {
         dispatch(deleteTaskError(error));

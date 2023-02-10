@@ -3,6 +3,7 @@ import SubTasks from "./SubTasks";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewTask,
+  deleteTask,
   toggleEditing,
   toggleTaskEditing,
   updateTask,
@@ -78,7 +79,7 @@ const TaskForm = ({ currentTask, editTask }) => {
   };
   const handleDeleteTask = () => {
     console.log("deleting task");
-    dispatch(updateTask(currentTask.id));
+    dispatch(deleteTask(currentTask.id));
     //closeForm();
   };
   const relatedTaskIds = currentTask?.relatedTasks || [];
@@ -219,7 +220,11 @@ const TaskForm = ({ currentTask, editTask }) => {
         <label className="related-tasks-title">Related tasks</label>
         <TaskList tasks={relatedTasks} isSubTask={true} />
 
-        <SubTasks currentId={task.id} subTasksIds={relatedTaskIds} />
+        {currentTask ? (
+          <SubTasks currentId={task.id} subTasksIds={relatedTaskIds} />
+        ) : (
+          <></>
+        )}
         <button
           type="submit"
           onClick={handleSubmitForm}

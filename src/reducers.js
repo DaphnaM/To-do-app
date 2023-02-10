@@ -70,7 +70,7 @@ export default function reducer(state = initialState, action) {
     case DELETE_TASK_SUCCESS:
       return {
         ...state,
-        tasks: state.task.filter((task) => task.id !== action.payload),
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
       };
     case DELETE_TASK_ERROR:
       return {

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleEditing } from "../actions";
 import "../App.css";
@@ -15,16 +14,18 @@ const TitleAndButton = ({ onClick, showForm }) => {
   return editing ? (
     <>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <h3>Tasks</h3>
+        <div className="tasks-title">Tasks</div>
         <button className="new_task_button" onClick={handleClick}>
           Cancel
         </button>
       </div>
-      <TaskForm />
+      <div className="new-task-form-container">
+        <TaskForm />
+      </div>
     </>
   ) : (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <h3>Tasks</h3>
+      <div className="tasks-title">Tasks</div>
       <button className="new_task_button" onClick={handleClick}>
         New Task
       </button>

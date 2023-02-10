@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "react";
+
 import { addRelatedTasks } from "../actions";
 
 export default function SubTasks({ currentId, subTasksIds }) {
@@ -8,9 +8,10 @@ export default function SubTasks({ currentId, subTasksIds }) {
   const dispatch = useDispatch();
 
   const addRelatedTasksHandler = (clickableTaskId) => {
+    console.log(clickableTaskId, currentId);
     dispatch(addRelatedTasks(clickableTaskId, currentId));
   };
-  const notIncludedIds = [currentId, ...subTasksIds];
+  const notIncludedIds = [currentId, ...subTasksIds]; //ids of tasks not to include in the related tasks picker
   return (
     <div>
       <label className="sub-tasks-lable">Link to other tasks</label>
@@ -24,7 +25,7 @@ export default function SubTasks({ currentId, subTasksIds }) {
                 key={clickableTask.id}
                 name="subTasks"
                 value={clickableTask.title}
-                onClick={(e) => addRelatedTasksHandler(clickableTask.id)}
+                onClick={() => addRelatedTasksHandler(clickableTask.id)}
               >
                 {clickableTask.title}
               </div>

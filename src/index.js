@@ -5,13 +5,15 @@ import store from "./store";
 import TaskList from "./components /TaskList";
 import { createRoot } from "react-dom/client";
 import TitleAndButton from "./components /TitleAndButton";
-import CreateTask from "./components /TaskForm";
+
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
 root.render(
-  <Provider store={store}>
-    <TitleAndButton />
-    <TaskList />
-  </Provider>
+  <div className="body">
+    <Provider store={store}>
+      <TitleAndButton />
+      <TaskList />
+    </Provider>
+  </div>
 );

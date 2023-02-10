@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import StatusDropdown from "./Dropdown";
 import "../App.css";
 import TaskForm from "./TaskForm";
 import { toggleTaskEditing } from "../actions";
+import SubTasks from "./SubTasks";
 
 //Task component maps task information
 const Task = ({ task, isSubTask = false }) => {
@@ -16,30 +16,35 @@ const Task = ({ task, isSubTask = false }) => {
     dispatch(toggleTaskEditing(task));
   };
   const handleClick = (event) => {
-    console.log(event.target.name);
     if (!editing && !isSubTask) openEditMode();
   };
 
-  const closeForm = () => {};
   //Passing down currentTask to know if were editing a task or if we're creating a new task
   return (
-    <div className="task form_wrapper" onClick={handleClick}>
-      {editing ? (
+    <div className="task" onClick={handleClick}>
+      {editing && !isSubTask ? ( //making sure doesn't open form inside form
         <TaskForm currentTask={task} />
       ) : (
         <>
-          <img className="task__image" src={task.imageSrc} />
-
+          <div className="left-side-container">
+            <img className="form-image" src="/icon.svg" alt="icon" />
+            <div className="assignee__title">{task.assignee}</div>
+          </div>
           <div>
             <div className="task__title">{task.title}</div>
             <div className="task__info">
               <div className="assignee__title">{task.assignee}</div>
-              <span class="dot"></span>
-              Created at: {task.creationDate}
+              <span className="dot"></span>
+              <div className="creation-date">
+                Creation date: {task.creationDate}
+              </div>
             </div>
           </div>
-          <div className="task-status-dropdown">
-            <StatusDropdown task={task} />
+          <div className="task-line-status">
+            <hr className="small-line" />
+            <div className="task-status-dropdown">
+              <StatusDropdown task={task} />
+            </div>
           </div>
         </>
       )}

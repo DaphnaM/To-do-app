@@ -8,6 +8,8 @@ import {
   TOGGLE_EDITING,
   TOGGLE_TASK_EDITING,
   ADD_RELATED_TASKS,
+  DELETE_TASK_ERROR,
+  DELETE_TASK_SUCCESS,
 } from "./actions";
 
 const initialState = {
@@ -16,21 +18,8 @@ const initialState = {
   editing: false,
   error: null,
 };
-const createInitialState = (state) => {
-  return {
-    ...state,
-    tasks: state.tasks.map((task) => {
-      return {
-        ...task,
-        editing: false,
-      };
-    }),
-  };
-};
-export default function reducer(
-  state = createInitialState(initialState),
-  action
-) {
+
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_TASKS_SUCCESS:
       return {
@@ -43,17 +32,13 @@ export default function reducer(
         ...state,
         error: action.payload,
       };
-
-    // update task success
-    //update task error
-
-    //add new task success  NOT DONE
     case ADD_NEW_TASK_SUCCESS:
       let currentTasks = state.tasks;
       currentTasks = currentTasks.concat(action.payload);
       return {
         ...state,
         tasks: currentTasks,
+        editing: false,
         error: null,
       };
     case ADD_NEW_TASK_ERROR:
@@ -63,15 +48,31 @@ export default function reducer(
       };
 
     case EDIT_TASK_SUCCESS:
+      console.log(action.payload);
       const newTasks = state.tasks.map((task) =>
-        task.id === action.payload.id ? action.payload : task
+        task.id === action.payload.id
+          ? {
+              ...action.payload,
+              relatedTasks: task.relatedTasks,
+              editing: false,
+            }
+          : task
       );
-
       return {
         ...state,
         tasks: newTasks,
       };
     case EDIT_TASK_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case DELETE_TASK_SUCCESS:
+      return {
+        ...state,
+        tasks: state.task.filter((task) => task.id !== action.payload),
+      };
+    case DELETE_TASK_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -83,6 +84,12 @@ export default function reducer(
       };
 
     case TOGGLE_TASK_EDITING:
+      console.log(
+        "editing now is going to be",
+        state.tasks,
+        "action.payload:",
+        action.payload
+      );
       return {
         ...state,
         tasks: state.tasks.map((task) =>
@@ -91,15 +98,18 @@ export default function reducer(
             : task
         ),
       };
+    //Gets two task ids and adds to each the other as a related task.
     case ADD_RELATED_TASKS:
       const { task1, task2 } = action.payload;
       return {
         ...state,
         tasks: state.tasks.map((task) => {
           if (task.id === task1) {
+            console.log("adding to task id", task.id, task2);
             return { ...task, relatedTasks: [...task.relatedTasks, task2] };
           }
           if (task.id === task2) {
+            console.log("adding to task id", task.id, task1);
             return { ...task, relatedTasks: [...task.relatedTasks, task1] };
           }
           return task;

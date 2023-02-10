@@ -12,10 +12,14 @@ export const ADD_NEW_TASK_SUCCESS = "ADD_NEW_TASK_SUCCESS";
 export const TOGGLE_EDITING = "TOGGLE_EDITING";
 export const TOGGLE_TASK_EDITING = "TOGGLE_TASK_EDITING";
 export const ADD_RELATED_TASKS = "ADD_RELATED_TASKS";
+export const DELETE_TASK_ERROR = "DELETE_TASK_ERROR";
+export const DELETE_TASK_SUCCESS = "DELETE_TASK_SUCCESS";
+export const DUPLICATE_TASK_SUCCESS = "DUPLICATE_TASK_SUCCESS";
+export const DUPLICATE_TASK_ERROR = "DUPLICATE_TASK_ERROR";
 
 export const fetchTasksSuccess = (tasks) => ({
   type: FETCH_TASKS_SUCCESS,
-  payload: tasks,
+  payload: tasks.map((task) => ({ ...task, editing: false })),
 });
 
 export const fetchTasksError = (error) => ({
@@ -68,6 +72,22 @@ export const addRelatedTasks = (task1, task2) => ({
   type: ADD_RELATED_TASKS,
   payload: { task1, task2 },
 });
+export const deleteTaskSuccess = (taskId) => ({
+  type: DELETE_TASK_SUCCESS,
+  payload: taskId,
+});
+export const deleteTaskError = (error) => ({
+  type: DELETE_TASK_ERROR,
+  payload: error,
+});
+export const duplicateTaskSuccess = (taskId) => ({
+  type: DUPLICATE_TASK_SUCCESS,
+  payload: taskId,
+});
+export const duplicateTaskError = (error) => ({
+  type: DUPLICATE_TASK_ERROR,
+  payload: error,
+});
 
 export const updateTask = (task) => {
   return (dispatch) => {
@@ -91,6 +111,19 @@ export const addNewTask = (task) => {
       })
       .catch((error) => {
         dispatch(addNewTaskError(error));
+      });
+  };
+};
+
+export const deleteTask = (taskId) => {
+  return (dispatch) => {
+    axios
+      .delete(`http://localhost:3001/task/${taskId}`)
+      .then((response) => {
+        dispatch(deleteTaskSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(deleteTaskError(error));
       });
   };
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SubTasks from "./SubTasks";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,11 +16,6 @@ const TaskForm = ({ currentTask, editTask }) => {
   const dispatch = useDispatch();
   let tasks = useSelector((state) => state.tasksReducer.tasks);
   let team = useSelector((state) => state.tasksReducer.team);
-  // let taskId = useSelector((state) => {
-  //   const lastTaskIndex = state.taskReducer.tasks?.length - 1;
-  //   const lastTask = state.taskReducer.tasks[lastTaskIndex];
-  //   return console.log(lastTask);
-  // });
   const createDate = () => {
     const now = new Date();
     return now.toDateString();
@@ -32,7 +27,7 @@ const TaskForm = ({ currentTask, editTask }) => {
     title: "",
     creationDate: createDate(),
     status: "New",
-    assignee: "Pick assignee",
+    assignee: "Unassigned",
 
     description: "",
     //parentTask: currentTask.parentTask || null,
@@ -56,39 +51,22 @@ const TaskForm = ({ currentTask, editTask }) => {
         ...task,
         [event.target.name]: event.target.value,
       });
-
-      let updatedTask = task;
     }
+    console.log(tasks.subTasks);
   };
-  const handleSubTaskClick = (event) => {
-    setSubTasks(event.target.value);
-
-    setTask({ ...task, subTasks: subTasks });
-  };
-
+  console.log(tasks.length);
   const handleSubmitForm = (e) => {
     e.preventDefault();
     if (currentTask) {
       dispatch(updateTask({ ...task }));
       setTask(task);
-
-      //currentTask = [];
     } else {
       dispatch(addNewTask({ ...task, subTasks: subTasks }));
-      //currentTask = [];
     }
-    closeForm();
-  };
-
-  //function to create sub task, not completed
-  const pickSubTask = (clickedTask) => {
-    setTask({ ...task, subTasks: "sub task" });
-    // setSubTasksToUpdate([...subTasksToUpdate, clickedTask.id]);
-
-    //console.log(subTasksToUpdate);
   };
 
   const closeForm = () => {
+    console.log("closing task", currentTask);
     const dispatchEvent = currentTask
       ? toggleTaskEditing(currentTask)
       : toggleEditing();
@@ -98,19 +76,41 @@ const TaskForm = ({ currentTask, editTask }) => {
   const handleEditTitle = () => {
     setEditTitle(!editTitle);
   };
-
+  const handleDeleteTask = () => {
+    console.log("deleting task");
+    dispatch(updateTask(currentTask.id));
+    //closeForm();
+  };
   const relatedTaskIds = currentTask?.relatedTasks || [];
 
   const relatedTasks = tasks.filter((task) => relatedTaskIds.includes(task.id));
 
   return (
     <form className="form_wrapper">
-      <span className="x-icon" onClick={closeForm}>
-        {" "}
-        ✖️{" "}
-      </span>
+      <div className="upper-right-cotainer">
+        <span className="x-icon" onClick={closeForm}>
+          {" "}
+          ✖️{" "}
+        </span>
+
+        {currentTask ? <span onClick={handleDeleteTask}> 🗑️ </span> : <></>}
+        {currentTask ? (
+          <span
+            onClick={() => {
+              dispatch(addNewTask(currentTask));
+              closeForm();
+              return console.log("duplicated task");
+            }}
+          >
+            👯{" "}
+          </span>
+        ) : (
+          <></>
+        )}
+      </div>
+
       <div className="form-row">
-        <img className="form-image" src="/icon.svg" />
+        <img className="form-image" src="/icon.svg" alt="icon" />
         <div className="form-row-1">
           {editTitle ? (
             <div className="input_wrapper">
@@ -124,25 +124,25 @@ const TaskForm = ({ currentTask, editTask }) => {
               />
             </div>
           ) : (
-            <label
+            <div
               className="task-title form-task-title"
               onClick={handleEditTitle}
             >
               {task.title ? task.title : "New Task"}
-            </label>
+            </div>
           )}
 
-          <label className="creationDate" htmlFor="inputCreationDate">
+          <div className="creationDate" htmlFor="inputCreationDate">
             {task.creationDate}
-          </label>
+          </div>
         </div>
       </div>
       <hr />
       <div className="form-row-2 form-row">
-        <div className="input_wrapper">
-          <label className="lable-row-2" htmlFor="inputStatus">
+        <div className="row_2_wrapper">
+          <div className="lable-row-2" htmlFor="inputStatus">
             Status
-          </label>
+          </div>
 
           <select
             className="status_dropdown select-hover"
@@ -163,14 +163,14 @@ const TaskForm = ({ currentTask, editTask }) => {
               )
             )}
           </select>
-          <i className="arrow down"></i>
+          {/* <i className="arrow down"></i> */}
         </div>
 
         <div className="input_wrapper">
-          <div className="input_wrapper">
-            <label className="lable-row-2" htmlFor="inputAssignee">
+          <div className="row_2_wrapper">
+            <div className="lable-row-2" htmlFor="inputAssignee">
               Assign to
-            </label>
+            </div>
 
             <select
               className="status_dropdown"
@@ -178,14 +178,14 @@ const TaskForm = ({ currentTask, editTask }) => {
               value={task.assignee ? task.assignee : null}
               name="assignee"
             >
-              <option value="Pick assignee">Pick assignee</option>
+              <option value="Pick assignee">Unassigned</option>
               {team.map((teamMember) => (
                 <option key={teamMember} value={teamMember}>
                   {teamMember}
                 </option>
               ))}
             </select>
-            <i className="arrow down"></i>
+            {/* <i className="arrow down"></i> */}
           </div>
         </div>
       </div>
@@ -216,7 +216,7 @@ const TaskForm = ({ currentTask, editTask }) => {
 
         */}
 
-        <lable className="related-tasks-title">Related tasks</lable>
+        <label className="related-tasks-title">Related tasks</label>
         <TaskList tasks={relatedTasks} isSubTask={true} />
 
         <SubTasks currentId={task.id} subTasksIds={relatedTaskIds} />

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTasksSuccess, fetchTasksError } from "../actions";
 import Task from "./TaskItem";
 import "../App.css";
+import Pagination from "./Pagination";
 
 //Task list component. Fetches tasks from server
 const TaskListContainer = () => {
@@ -25,26 +26,26 @@ const TaskListContainer = () => {
 
   return <TaskList tasks={tasks} />;
 };
-function Pagination({ itemsPerPage, totalItems, currentPage, onPageClick }) {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const pages = Array.from(Array(totalPages), (_, index) => index + 1);
+// function Pagination({ itemsPerPage, totalItems, currentPage, onPageClick }) {
+//   const totalPages = Math.ceil(totalItems / itemsPerPage);
+//   const pages = Array.from(Array(totalPages), (_, index) => index + 1);
 
-  return (
-    <div className="pagination">
-      {pages.map((page) => (
-        <button
-          key={page}
-          className={`pagination pagination__page-number ${
-            currentPage === page ? "active" : ""
-          }`}
-          onClick={() => onPageClick(page)}
-        >
-          {page}
-        </button>
-      ))}
-    </div>
-  );
-}
+//   return (
+//     <div className="pagination">
+//       {pages.map((page) => (
+//         <button
+//           key={page}
+//           className={`pagination pagination__page-number ${
+//             currentPage === page ? "active" : ""
+//           }`}
+//           onClick={() => onPageClick(page)}
+//         >
+//           {page}
+//         </button>
+//       ))}
+//     </div>
+//   );
+// }
 
 export function TaskList({ tasks = [], isSubTask }) {
   const [currentPage, setCurrentPage] = useState(1);

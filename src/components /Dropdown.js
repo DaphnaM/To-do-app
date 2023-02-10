@@ -7,7 +7,7 @@ import "../App.css";
 //Status dropdown component
 const Dropdown = ({ task }) => {
   const dispatch = useDispatch();
-  const options = ["Done", "In Progress", "New"];
+  const options = ["Done", "In Progress", "Open"];
   const [newStatus, setNewStatus] = useState(task.status);
 
   const handleChange = (e) => {
@@ -24,7 +24,7 @@ const Dropdown = ({ task }) => {
       case "In Progress":
         return "#f3f79d";
         break;
-      case "New":
+      case "Open":
         return "#ced8fb";
         break;
 
@@ -60,9 +60,3 @@ const Dropdown = ({ task }) => {
 };
 
 export default Dropdown;
-
-/*
-inside the first select tag
-className="task__status"
-          value={selectedOption}
-*/

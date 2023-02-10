@@ -38,6 +38,7 @@ const Task = ({ task, isSubTask = false }) => {
               <div className="creation-date">
                 Creation date: {task.creationDate}
               </div>
+              <div></div>
             </div>
           </div>
           <div className="task-line-status">

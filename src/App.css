@@ -62,7 +62,11 @@ label {
   max-width: 680px;
 
 }
-
+.input_wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
 
 .App-header {
   background-color: #282c34;
@@ -74,9 +78,6 @@ label {
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-/* TASK */
-  
 
 .task {
   display: grid;
@@ -106,6 +107,10 @@ label {
 
 }
 
+.task-form-open > .task {
+    cursor: default;
+}
+
 .task__title {
   font-size: 16px;
   font-weight:600px ;
@@ -113,7 +118,6 @@ label {
   color: #101828;
   flex-wrap: wrap;
 }
-
 
 .task__assignee {
   font-size: 14px;
@@ -135,51 +139,19 @@ label {
   color: #fff;
   margin-left: auto;
 }
- 
-.task__info {
+
+.new-task-form_wrapper{
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  color:#98A2B3
+  flex-direction: column;
+  background-color: #F7F9FC;
+  border-radius: 6px;
+  
 }
-
-  .task-title {
-    width: 576px;
-    height: 18px;
-    color: #101828;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 18px;
-    margin-bottom: 10px; 
-  }
-
-.creationDate{
-    font-size: 12px;
-    font-style: normal;
-    color: #667085
-}
-
-
-/* FORM */
-
-
 
 .form-container {
   display: flex;
   align-items: center;
   margin-bottom: 1rem; 
-}
-.task-form-container{
-  display: flex;
-  flex-direction: row;
-}
-.form-task-title{
-  cursor: pointer;
-  flex-wrap: wrap;
-  color:#101828;
 }
 
 .form-row {
@@ -199,33 +171,12 @@ label {
   margin-left: 20px;
   width: 100%;
 }
-.new-task-form_wrapper{
-  display: flex;
-  flex-direction: column;
-  background-color: #F7F9FC;
-  border-radius: 6px;
-  max-width: 680px;
-  
-}
-
-.task-form-open > .task {
-  cursor: default;
-}
 
 
 .form-group{
   display: flex;
   flex-direction: column;
 }
-.form-row-2 {
-  justify-content: space-around;
-}
-
-
-
-/* BUTTONS */
-
-
 
 .submit_button {
   padding: 10px 20px;
@@ -243,30 +194,6 @@ label {
   background-color: rgb(106, 136, 181)
 }
 
-  
-.new_task_button {
-  border: solid 1px #DFE3EB;
-  padding: 10px 20px;
-  border-radius: 6px;
-  margin-left: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  background-color: transparent;
-  color:#98A2B3;
-}
-
-.new_task_button:hover {
-  background-color: #0F52BA;
-  color: #fff;
-}
-
-
-
-/* DROPDOWN */
-
-
-
 .status_dropdown{
   background-color: #EEF2F8;
   text-align: center;
@@ -282,24 +209,28 @@ label {
   background-color: #0F52BA;
  color: #EEF2F8;
 }
+.form_wrapper >.status_dropdown{
+cursor:none;
+background-color:red;
+}
 
 
+@media only screen and (min-width: 680px){
+.task-list-container>.status_dropdown:hover{
+  background-color: #EEF2F8;
+  color: #EEF2F8;
+  
+
+}}
 .status_dropdown_list{
   border-radius: 50px;
   background-color: red;
 }
-
-@media only screen and (min-width: 680px){
-  .task-list-container>.status_dropdown:hover{
-    background-color: #EEF2F8;
-    color: #EEF2F8;
-  
-  }}
-
-
-
-/* SUBTASKS */
-
+.lable-row-2{
+  display: flex;
+  padding: 5px 10px;
+  flex-direction: row;
+}
 
 
 .sub-tasks-lable-container {
@@ -318,45 +249,94 @@ label {
   margin: 10px;
   cursor: pointer;
 }
-.sub-task-date{
-  display: grid;
-}
 
-.sub-task{
-  cursor: default;
-} 
-
-/* INPUT */
-
-.input_wrapper {
+  .input_wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-.input-description{
-  color: #667085
-}
- 
-
-.row_2_wrapper {
+  }
+  .row_2_wrapper {
   display: flex;
   flex-direction: column;
   align-items: left;
   color: #98A2B3;
 }
-.lable-row-2{
+  
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
-  padding: 5px 10px;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+  
+  
+.new_task_button {
+  border: solid 1px #DFE3EB;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-left: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  color:#98A2B3;
 }
 
+.new_task_button:hover {
+  background-color: #0F52BA;
+  color: #fff;
+}
+  
+  
+.task__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color:#98A2B3
+}
+ 
+  .tasks-title{
+    font-size: 22px;
+  }
+ 
+
+.task-title {
+    width: 576px;
+    height: 18px;
+    color: #101828;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 10px;
+    
+}
+.creationDate{
+    font-size: 12px;
+    font-style: normal;
+    color: #667085
+}
+.input-description{
+    color: #667085
+}
+.form-row-2 {
+    justify-content: space-around;
+}
 .select-hover {
-  cursor: pointer;
+    cursor: pointer;
 }
   
 .sub-tasks-lable {
-  color: #667085;
-  padding-top: 10px;
+    color: #667085;
+    padding-top: 10px;
+    
+
 }
 
 .arrow {
@@ -364,6 +344,7 @@ label {
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
+    
 }
 .down {
   transform: rotate(45deg);
@@ -377,8 +358,13 @@ label {
     top: 12.5%;
     bottom: 12.5%;
     border: 2px solid #1D2939;
-}
 
+}
+  .form-task-title{
+    cursor: pointer;
+    flex-wrap: wrap;
+    color:#101828;
+}
 .form-image{
     height: 40px;
     width: 40px;
@@ -400,6 +386,7 @@ label {
     color: #475467;
     padding-top:10px;
     padding-bottom: 10px;
+
 }
 
 .x-icon{
@@ -415,6 +402,7 @@ label {
   justify-content: space-between;
   margin-left: 5px;
   margin-right: 5px;
+
 }
 
 .page-title {
@@ -422,51 +410,57 @@ label {
   color:#475467;
 }
  
-.upper-right-cotainer{
-  display:flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  padding-left: 520px;  
-}
-.task-list-container{
-  max-width: 680px;
-}
-.small-line{
-  display: flex;
-  margin: 1px;
-  margin-right:25px;
-  flex-direction: column;
-}
-.task-line-status{
-  display: flex;
-  flex-direction: row;
-}
+.new-task-form-container{
+    background-color: #F7F9FC;
+    border-radius: 6px;
+    max-width: 680px;
 
-  /* PAGINATION */
+  }
+
+  .upper-right-cotainer{
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-left: 520px;
+    
+  }
+  .task-list-container{
+    max-width: 680px;
+    
+  }
+  .small-line{
+    display: flex;
+    margin: 1px;
+    margin-right:25px;
+    flex-direction: column;
+  }
+  .task-line-status{
+    display: flex;
+    flex-direction: row;
+  }
 .pagination{
-  display: flex;
-  font-size: 18px;
-  background-color:transparent;
-  border-radius: 6px;
-  border:none;
-  justify-content: center;
-  padding: 2px 10px;
-  cursor: pointer;
+    display: flex;
+    font-size: 18px;
+    background-color:transparent;
+    border-radius: 6px;
+    border:none;
+    justify-content: center;
+    padding: 2px 10px;
+    cursor: pointer;
 }
 
-
-  
-.pagination :hover{
-  background-color:#DFE3EB
-}
 .left-side-container > .assignee__title{
   display:none;
 }
+.sub-task-date{
+  display: grid;
+}
+  
+  .pagination :hover{
+      background-color:#DFE3EB
+  }
 
-
-
-
-@media only screen and (max-width: 680px){
+  @media only screen and (max-width: 680px){
   .left-side-container > .assignee__title {
     display:block;
   }
@@ -491,9 +485,9 @@ label {
     padding: 10px;
   }
  
-  .task-form-open > .creation-date{
+   .task-form-open > .creation-date{
     display: none;
-  }
+   }
   .upper-right-cotainer{
     justify-content: right;
     padding-left: 0px;
@@ -511,4 +505,16 @@ label {
   .sub-task-date{
     display: none;
   }
+}
+.task-form-container{
+  display: flex;
+  flex-direction: row;
+}
+.task > .select{
+  background-color: red;
+}
+
+.sub-task{
+  cursor: default;
+
 }

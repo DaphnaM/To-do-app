@@ -4,7 +4,7 @@ import "../App.css";
 import TaskForm from "./TaskForm.js";
 
 //
-const TitleAndButton = ({ onClick, showForm }) => {
+const TitleAndButton = () => {
   const dispatch = useDispatch();
   const editing = useSelector((state) => state.tasksReducer.editing);
   const handleClick = () => {

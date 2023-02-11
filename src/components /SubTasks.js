@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addRelatedTasks } from "../actions";
 
+//SubTasks component maps tasks to show available tasks to choose related tasks from. The component recieves the currentId and SubTaskIds to exclude from the the list
+
 export default function SubTasks({ currentId, subTasksIds }) {
   let tasks = useSelector((state) => state.tasksReducer.tasks);
   const dispatch = useDispatch();

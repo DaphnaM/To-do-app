@@ -13,7 +13,7 @@ import { TaskList } from "./TaskList";
 
 //Task from component, recieves current task and conditionally renders the data if currentTask exists
 
-const TaskForm = ({ currentTask, editTask }) => {
+const TaskForm = ({ currentTask }) => {
   const dispatch = useDispatch();
   let tasks = useSelector((state) => state.tasksReducer.tasks);
   let team = useSelector((state) => state.tasksReducer.team);
@@ -31,7 +31,6 @@ const TaskForm = ({ currentTask, editTask }) => {
     assignee: "Unassigned",
 
     description: "",
-    //parentTask: currentTask.parentTask || null,
     relatedTasks: [],
   };
   const currentTaskState = currentTask ? currentTask : newTask;
@@ -53,10 +52,9 @@ const TaskForm = ({ currentTask, editTask }) => {
         [event.target.name]: event.target.value,
       });
     }
-    console.log(tasks.subTasks);
   };
-  console.log(tasks.length);
   const handleSubmitForm = (e) => {
+    console.log(tasks.length);
     e.preventDefault();
     if (currentTask) {
       dispatch(updateTask({ ...task }));
@@ -78,16 +76,14 @@ const TaskForm = ({ currentTask, editTask }) => {
     setEditTitle(!editTitle);
   };
   const handleDeleteTask = () => {
-    console.log("deleting task");
     dispatch(deleteTask(currentTask.id));
-    //closeForm();
   };
   const relatedTaskIds = currentTask?.relatedTasks || [];
 
   const relatedTasks = tasks.filter((task) => relatedTaskIds.includes(task.id));
 
   return (
-    <form className="form_wrapper">
+    <form className="new-task-form_wrapper">
       <div className="upper-right-cotainer">
         <span className="x-icon" onClick={closeForm}>
           {" "}
@@ -186,7 +182,6 @@ const TaskForm = ({ currentTask, editTask }) => {
                 </option>
               ))}
             </select>
-            {/* <i className="arrow down"></i> */}
           </div>
         </div>
       </div>
@@ -202,21 +197,6 @@ const TaskForm = ({ currentTask, editTask }) => {
           value={task.description}
           onChange={handleChange}
         />
-
-        {/*
-        
-        {task.parentTask ? (
-          <></>
-        ) : (
-          <>
-            {tasks.map((clickableTask) => {
-              <div onClick={handleChange}> {clickableTask.title}</div>;
-            })}
-          </>
-        )}
-
-        */}
-
         <label className="related-tasks-title">Related tasks</label>
         <TaskList tasks={relatedTasks} isSubTask={true} />
 

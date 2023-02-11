@@ -5,7 +5,7 @@ import Task from "./TaskItem";
 import "../App.css";
 import Pagination from "./Pagination";
 
-//Task list component. Fetches tasks from server
+//Task list component. Fetches tasks from server to displays the task list and Pagination component
 const TaskListContainer = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasksReducer.tasks);
@@ -41,7 +41,7 @@ export function TaskList({ tasks = [], isSubTask }) {
     );
   }, [tasks, currentPage]);
 
-  //Pagination click handler passed down to Pagination component
+  //Pagination click handler handlePageClick passed down to Pagination component
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

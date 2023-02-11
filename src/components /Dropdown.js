@@ -5,7 +5,7 @@ import { updateTask } from "../actions.js";
 import "../App.css";
 
 //Status dropdown component
-const Dropdown = ({ task }) => {
+const Dropdown = ({ task, isSubTask, editing }) => {
   const dispatch = useDispatch();
   const options = ["Done", "In Progress", "Open"];
   const [newStatus, setNewStatus] = useState(task.status);
@@ -16,33 +16,16 @@ const Dropdown = ({ task }) => {
     setNewStatus(e.target.value);
     dispatch(updateTask({ ...updatedTask }));
   };
-  const colorSelector = () => {
-    switch (newStatus) {
-      case "Done":
-        return "#c2fac2";
-        break;
-      case "In Progress":
-        return "#f3f79d";
-        break;
-      case "Open":
-        return "#ced8fb";
-        break;
 
-      default:
-        break;
-    }
-  };
-  const handleSelectClick = (e) => {
-    e.stopPropagation();
-  };
+  const handleSelectClick = (e) => e.stopPropagation();
 
   return (
     <select
-      className="status_dropdown dropdown_task"
+      className="status_dropdown"
       onChange={handleChange}
       value={newStatus}
-      style={{ backgroundColor: colorSelector() }}
       onClick={handleSelectClick}
+      disabled={isSubTask ? true : false}
     >
       {options.map((option) =>
         option === task.status ? (

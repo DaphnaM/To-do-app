@@ -85,21 +85,29 @@ const TaskForm = ({ currentTask }) => {
   return (
     <form className="new-task-form_wrapper">
       <div className="upper-right-cotainer">
-        <span className="x-icon" onClick={closeForm}>
+        <span title="Close" className="x-icon" onClick={closeForm}>
           {" "}
           ✖️{" "}
         </span>
 
-        {currentTask ? <span onClick={handleDeleteTask}> 🗑️ </span> : <></>}
+        {currentTask ? (
+          <span title="Trash" onClick={handleDeleteTask}>
+            {" "}
+            🗑️{" "}
+          </span>
+        ) : (
+          <></>
+        )}
         {currentTask ? (
           <span
+            title="Duplicate"
             onClick={() => {
               dispatch(addNewTask(currentTask));
               closeForm();
               return console.log("duplicated task");
             }}
           >
-            👯{" "}
+            <img className="duplicate-icon" src="/icon (1).svg" alt="icon" />
           </span>
         ) : (
           <></>
@@ -160,7 +168,7 @@ const TaskForm = ({ currentTask }) => {
               )
             )}
           </select>
-          {/* <i className="arrow down"></i> */}
+          {/* <i className="arrow down"></i> from liminal*/}
         </div>
 
         <div className="input_wrapper">
@@ -197,7 +205,7 @@ const TaskForm = ({ currentTask }) => {
           value={task.description}
           onChange={handleChange}
         />
-        <label className="related-tasks-title">Related tasks</label>
+        <label className="related-tasks-title"> Related tasks</label>
         <TaskList tasks={relatedTasks} isSubTask={true} />
 
         {currentTask ? (
